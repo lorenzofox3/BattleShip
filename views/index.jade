@@ -1,24 +1,38 @@
 extends layout
 
 block body
-  div(ng-controller='AppCtrl')
-    h2 Hello {{name}}
-    ul.menu
-      li
-        a(href='view1') view1
-      li
-        a(href='view2') view2
+    header#title
+        h1 {{currentPhase}}
+        button(ng-click='play()', ng-show='displayPlayButton') play
+    div#main
+        div.dashBoard(ng-controller='playerGridCtrl')
+            table
+                tr(ng-repeat='row in grid.cells')
+                    td(ng-repeat='cell in row', ng-click='clickCell(cell)')
+                        cell(boat='cell.boat', status='cell.status')
+            div#boats
+                ul
+                    li(ng-repeat='boat in boats')
+                        button.boatButton(ng-click='selectBoat(boat)') {{boat.name}}
+                div#boatDetail
+                    span name:{{currentBoat.name}}
+                    br
+                    span size : {{currentBoat.size}}
+                    br
+                    span health : {{currentBoat.health}}
+        div.dashBoard(ng-controller='fireFieldCtrl')
+            div#fireOverlay(ng-hide='isAvailable') waiting for the ships to be ready ...
+            table
+                tr(ng-repeat='row in grid.cells')
+                    td(ng-repeat='cell in row', ng-click='clickCell(cell)')
+                        cell(status='cell.status')
 
-    div(ng-view)
 
-    div
-      | Angular Socket.io seed app: v
-      span(app-version)
+    script(src='js/lib/angular/angular.js')
+    script(src='js/app.js')
+    script(src='js/services/grid-service.js')
+    script(src='js/controllers/main-controller.js')
+    script(src='js/controllers/playerGrid-controller.js')
+    script(src='js/controllers/fireField-controller.js')
+    script(src='js/directives/cell-directive.js')
 
-  script(src='js/lib/angular/angular.js')
-  script(src='/socket.io/socket.io.js')
-  script(src='js/app.js')
-  script(src='js/services.js')
-  script(src='js/controllers.js')
-  script(src='js/filters.js')
-  script(src='js/directives.js')
