@@ -1,0 +1,9 @@
+p {{beforeRefresh}} seconds before refresh
+ul
+    li(ng-repeat='room in rooms')
+        a(ng-href='#/game/battleship/{{room.ref}}') {{room.name}}
+        span players : {{room.count}}/2
+        button(ng-click='delete(room)') X
+button(ng-click='createGame()') add
+button(ng-click='refresh()') refresh
+

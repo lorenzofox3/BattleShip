@@ -4,6 +4,11 @@ html(ng-app="app")
     meta(charset='utf8')
     base(href='/')
     title BattleShip game
-    link(rel='stylesheet', href='/css/mainStyle.css')
-  body(ng-controller="mainCtrl")
+    link(rel='stylesheet/less', href='game/css/mainStyle.less')
+    script(src='/game/js/lib/LESS/less.js')
+  body(ng-controller='mainCtrl')
+    div#overlay(ng-show='showOverlay')
+      div#modal
+        p game is over...
+        button(ng-click='toggleOverlay()') go back
     block body

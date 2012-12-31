@@ -1,0 +1,12 @@
+div#chat
+    h2(ng-click='size()') chat
+    ul
+        li(ng-repeat='message in messages')
+            div
+                span.chatAuthor {{message.author}} :
+                span.chatMessage {{message.message}}
+    form(ng-submit='post()')
+        input#chatInput(type="text", ng-model='currentMessage')
+        input(type='submit', value="Post")
+
+

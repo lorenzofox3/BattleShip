@@ -1,0 +1,28 @@
+header#title
+    h1 {{room.name}}
+
+div#main
+    div.dashBoard(ng-controller='playerGridCtrl')
+        table
+            tr(ng-repeat='row in grid.cells')
+                td(ng-repeat='cell in row', ng-click='clickCell(cell)')
+                    cell(boat='cell.boat', status='cell.status')
+        div#boats
+            ul
+                li(ng-repeat='boat in boats')
+                    button.boatButton(ng-click='selectBoat(boat)') {{boat.name}}
+            div#boatDetail
+                span name:{{currentBoat.name}}
+                br
+                span size : {{currentBoat.size}}
+                br
+                span health : {{currentBoat.health}}
+            button.play(ng-click='play()', ng-show='showPlay') play
+    div.dashBoard(ng-controller='fireFieldCtrl')
+        div#fireOverlay(ng-hide='isAvailable') {{overlayMessage}}
+        table
+            tr(ng-repeat='row in grid.cells')
+                td(ng-repeat='cell in row', ng-click='clickCell(cell)')
+                    cell(status='cell.status')
+my-chat
+
