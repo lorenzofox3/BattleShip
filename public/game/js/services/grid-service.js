@@ -6,11 +6,12 @@
  * To change this template use File | Settings | File Templates.
  */
 
-app.service('grid',[function(){
+app.service('grid',['socket',function(socket){
 
     var rows=10;
     var columns=10;
     var playerGrid;
+    var playerBoats;
 
     this.getRows=function(){
         return rows;
@@ -30,8 +31,33 @@ app.service('grid',[function(){
         return boats;
     };
 
-    this.saveGrid=function(grid){
+    this.startGame=function(grid,boats){
         playerGrid=grid;
+        playerBoats=boats;
+
+        //submit to the server
+        socket.emit('play',{grid:playerGrid,boats:playerBoats});
+    };
+
+    this.fire=function(row,column){
+      socket.emit('fire',{row:row,column:column});
+    };
+
+    //just to inject socket only here and not in the controllers->controllers subscribe to this service which subscribes to the socket service (I believe it would make the testing of the controllers easier)
+    this.target=function(callback){
+        socket.on('target',callback);
+    }
+
+    this.shoot=function(callback){
+        socket.on('shoot',callback);
+    }
+
+    this.result=function(callback){
+        socket.on('result',callback);
+    };
+
+    this.leave=function(callback){
+        socket.emit('leave');
     };
 
 }]);

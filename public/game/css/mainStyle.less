@@ -1,0 +1,319 @@
+body{
+  background-color: rgb(230,230,250);
+}
+
+ul{
+  padding:5px;
+  margin: 5px;
+}
+
+li{
+  list-style: none;
+}
+
+.rounded-corners(@radius){
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+  -ms-border-radius: @radius;
+  -o-border-radius: @radius;
+  border-radius: @radius;
+}
+#main{
+  display: inline-block;
+  margin: auto;
+  text-align: center;
+  overflow-x: auto;
+  white-space: nowrap;
+/*dfdsf*/
+}
+
+#title{
+  position:absolute;
+  top:0;
+  left:0;
+  display: inline-block;
+  color: white;
+  width: 100%;
+  background: rgba(30,30,30,0.8);
+  margin : 0;
+  text-align: center;
+  padding:4px;
+}
+
+#title>h1{
+  margin: 0px 10px;
+  display: inline-block;
+}
+
+.play{
+  width: 100px;
+  padding: 4px;
+  color: #f5f5f5;
+  background-color: #2e8b57;
+  cursor: pointer;
+}
+table{
+  border:2px solid rgb(100,100,200);
+  display: inline-block;
+  background-image: url('images/mer.jpg');
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow:  3px 3px 5px 4px rgba(100, 100, 100, 0.58);
+  box-shadow:  3px 3px 5px 4px rgba(100, 100, 100, 0.60);
+}
+
+td{
+  border:1px dashed gray;
+  margin: 0;
+  width: 50px;
+  height: 50px;
+}
+
+td:hover{
+  cursor: pointer;
+}
+
+td > div {
+  width: 100%;
+  height: 100%;
+
+}
+
+.dashBoard{
+  margin-top: 50px;
+  margin-left: 20px;
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+}
+
+#boats{
+  display: inline-block;
+  vertical-align: top;
+  margin: 20px;
+}
+
+.available
+{
+  background-color: rgba(20,90,20,0.5);
+  transition: all 1s;
+  -webkit-transition:all 1s;
+}
+
+.occupied{
+  background-color: rgba(20,20,20,0.8);
+  color: white;
+  transition: all 1s;
+  -webkit-transition:all 1s;
+}
+
+.missed{
+  background-color: rgba(240,240,240,0.8);
+  transition: all 1s;
+  -webkit-transition:all 1s;
+}
+
+.hit{
+  background-color: rgba(240,100,100,0.8);
+  transition: all 1s;
+  -webkit-transition:all 1s;
+}
+
+.sunk{
+  background-color: rgba(240,240,100,0.8);
+  transition: all 1s;
+  -webkit-transition:all 1s;
+}
+
+#message{
+  display: block;
+  height: 20px;
+  margin: 10px;
+}
+
+.boatButton{
+  background: rgba(100,100,100,0.8);
+  color: white;
+  padding: 4px;
+  width: 100px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  cursor:pointer;
+}
+
+.boatButton:hover{
+  background-color: rgba(200,200,200,0.8);
+  color:rgb(30,30,30);
+}
+
+.boatDetail{
+  background-color: rgb(200,200,200);
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow:  3px 3px 7px 3px rgba(100, 100, 100, 0.58);
+  box-shadow:  3px 3px 7px 3px rgba(100, 100, 100, 0.60);
+}
+
+#fireOverlay
+{
+  position: absolute;
+  display: inline-block;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(250,250,250,0.6);
+  z-index: 4;
+}
+
+
+#chat{
+  position:fixed;
+  bottom:0;
+  right:0;
+  width: 200px;
+  display:inline-block;
+  z-index: 10;
+  border-radius: 4px 4px 0 0;
+//  border-top:1px dashed rgb(250,250,250);
+//  border-left:1px dashed rgb(250,250,250);
+//  border-righ:1px dashed rgb(250,250,250);
+  background: rgb(40,52,59); /* Old browsers */
+  background: -moz-linear-gradient(top,  rgba(40,52,59,1) 0%, rgba(104,109,114,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(40,52,59,1)), color-stop(100%,rgba(104,109,114,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgba(40,52,59,1) 0%,rgba(104,109,114,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgba(40,52,59,1) 0%,rgba(104,109,114,1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgba(40,52,59,1) 0%,rgba(104,109,114,1) 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  rgba(40,52,59,1) 0%,rgba(104,109,114,1) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#28343b', endColorstr='#686d72',GradientType=0 ); /* IE6-9 */
+
+}
+
+#chat.expanded{
+  height: 200px;
+  transition: all 1s;
+  -moz-transition: all 1s; /* Firefox 4 */
+  -webkit-transition: all 1s; /* Safari and Chrome */
+  -o-transition: all 1s; /* Opera */
+}
+
+#chat.reduced{
+  height: 22px;
+  transition: all 1s;
+  -moz-transition: all 1s; /* Firefox 4 */
+  -webkit-transition: all 1s; /* Safari and Chrome */
+  -o-transition: all 1s; /* Opera */
+}
+
+#chat.reduced:before{
+  display: inline-block;
+  content:"↑";
+  color: white;
+  margin: 2px;
+  width: 5px;
+}
+
+#chat.expanded:before{
+  display: inline-block;
+  content:"↓";
+  color: white;
+  margin: 2px;
+  width: 5px;
+}
+
+#chat>h2{
+  text-align: center;
+  font-size: 16px;
+  height: 22px;
+  color:white;
+  margin: 2px;
+  padding: 2px;
+  cursor:pointer;
+  width: 80%;
+  display: inline-block;
+}
+
+#chat>ul{
+  height: 65%;
+  widht:100%;
+  background-color: rgb(250,250,250);
+  overflow-y: auto;
+  .rounded-corners(2px);
+  border: 1px solid rgb(00,00,00);
+  padding: 1px;
+  -webkit-box-shadow: inset 1px 1px 5px 2px rgba(100, 120, 100, 0.6);
+  box-shadow: inset 1px 1px 5px 2px rgba(100, 100, 120, 0.6);
+}
+
+#chat>form{
+  text-align: center;
+  margin:2px;
+}
+
+#chat input[type="text"]{
+  width: 60%;
+  .rounded-corners(2px);
+}
+
+#chat input[type="submit"]{
+  width: 20%;
+  margin: 0 5px;
+  .rounded-corners(2px);
+  color: white;
+  background: rgb(41,154,11); /* Old browsers */
+  background: -moz-linear-gradient(top,  rgba(41,154,11,1) 0%, rgba(41,154,11,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(41,154,11,1)), color-stop(100%,rgba(41,154,11,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgba(41,154,11,1) 0%,rgba(41,154,11,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgba(41,154,11,1) 0%,rgba(41,154,11,1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgba(41,154,11,1) 0%,rgba(41,154,11,1) 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  rgba(41,154,11,1) 0%,rgba(41,154,11,1) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#299a0b', endColorstr='#299a0b',GradientType=0 ); /* IE6-9 */
+  border: 1px solid rgb(100,100,100);
+}
+
+.chatAuthor{
+  font-weight: bold;
+  color: blue;
+}
+
+.chatMessage{
+  font-style: italic;
+  color: rgb(30,40,30);
+}
+
+.blink{
+  border-top:2px solid red;
+  border-left:2px solid red;
+  border-right:2px solid red;
+}
+
+/*
+  overlay
+*/
+#overlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(30,30,30,0.9);
+  z-index:99;
+}
+
+#modal{
+  padding: 20px;
+  display: inline-block;
+  width: 50%;
+  height: 200px;
+  margin: 100px 300px;
+  background: rgb(250,250,250);
+  -webkit-border-radius: 8px 0px 8px 0px;
+  -moz-border-radius: 8px 0px 8px 0px;
+  border-radius: 8px 0px 8px 0px;
+  -webkit-box-shadow:  4px 4px 10px 5px rgba(20, 20, 20, 1);
+  -moz-box-shadow:  4px 4px 10px 5px rgba(20, 20, 20, 1);
+  box-shadow:  4px 4px 10px 5px rgba(20, 20, 20, 1);
+}
+
+
+

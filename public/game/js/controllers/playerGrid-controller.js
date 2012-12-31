@@ -24,120 +24,16 @@ app.controller('playerGridCtrl',['$scope','grid','$log',function(scope,grid,log)
         }
     };
 
+    scope.showPlay=false;
+
     var availableSet=[];
+    //one for each orientation
     availableSet.push([]);
     availableSet.push([]);
     availableSet.push([]);
     availableSet.push([]);
     var start=null;
     //click cell
-    scope.clickCell=function(cell){
-
-        //replace message
-        scope.message='place the boats';
-
-        //placing
-        if(scope.currentPhase==='placement'){
-
-            var size = scope.currentBoat.size;
-            //select start
-            if (start===null) {
-
-                //if boat is already placed:reset
-                if(scope.currentBoat.cells.length>0){
-                    angular.forEach(scope.currentBoat.cells,function(value,key){
-                        value.boat=undefined;
-                        value.status='free';
-                    });
-                    //better way to empty array
-                    scope.currentBoat.cells=[];
-                }
-
-                if (cell.boat === undefined) {
-                    start = cell;
-                    setAvailability(scope.currentBoat, start);
-                }
-                else {
-                    scope.message = 'This cell is already occupied';
-                }
-            }
-            //choose direction
-            else{
-                //click one not available->restart the process
-                if (cell.status!=='available') {
-
-                    //reset availableSet
-                    for(var i=0;i<availableSet.length;i++){
-                        angular.forEach(availableSet[i],function(value,key){
-                            value.status='free';
-                        });
-                        //there is a better way to empty array (splice)
-                        availableSet[i]=[];
-                    }
-                    //don't forget the center
-                    start.status='free';
-
-                    if (cell.boat === undefined) {
-                        start = cell;
-                        setAvailability(scope.currentBoat, start);
-                    }
-                    else {
-                        scope.message = 'This cell is already occupied';
-                    }
-                }
-                //select direction
-                else{
-                    //if click the start one : must select a direction
-                    if(cell==start){
-                        scope.message='select a sens';
-                    }
-                    //select direction
-                    else{for(var i=0;i<availableSet.length;i++){
-                        if(contains(availableSet[i],cell)){
-                            var boatIndex=scope.currentBoat.getIndex();
-                            angular.forEach(availableSet[i],function(value,key){
-                                value.boat=boatIndex;
-                                value.status='occupied';
-                                scope.currentBoat.cells.push(value);
-                            });
-                            start.boat = boatIndex;
-                            start.status='occupied';
-                            scope.currentBoat.cells.push(start);
-                            start=null;
-                        }
-                        //reset others
-                        else{
-                            angular.forEach(availableSet[i],function(value,key){
-                                value.status='free';
-                            });
-                        }
-                        //better way to empty array
-                        availableSet[i]=[];
-                    }
-                        //go for next boat
-                        var indexCurrentBoat=indexOf(scope.boats,scope.currentBoat);
-                        if((indexCurrentBoat+1)<scope.boats.length){
-                            scope.currentBoat=scope.boats[indexCurrentBoat+1];
-                        }
-
-                    }
-                }
-            }
-
-            //check if all the boats have been placed
-            var isReady=true;
-            angular.forEach(scope.boats,function(value,key){
-                if(value.cells.length==0){
-                    isReady=false
-                }
-            });
-            scope.$emit('ready',{value:isReady});
-
-        }
-
-    };
-
-    //helper
     var setAvailability=function(boat,first){
         var count=0;
 
@@ -225,7 +121,161 @@ app.controller('playerGridCtrl',['$scope','grid','$log',function(scope,grid,log)
 
         return count;
     };
+    scope.clickCell=function(cell){
 
+        //replace message
+        scope.message='place the boats';
+
+        //placing
+        if(scope.currentPhase==='placement'){
+
+            var size = scope.currentBoat.size;
+            //select start
+            if (start===null) {
+
+                //if boat is already placed:reset
+                if(scope.currentBoat.cells.length>0){
+                    angular.forEach(scope.currentBoat.cells,function(value,key){
+                        value.boat=undefined;
+                        value.status='free';
+                    });
+                    //there is a better way to empty array
+                    scope.currentBoat.cells=[];
+                }
+
+                if (cell.boat === undefined) {
+                    start = cell;
+                    setAvailability(scope.currentBoat, start);
+                }
+                else {
+                    scope.message = 'This cell is already occupied';
+                }
+            }
+            //choose direction
+            else{
+                //click one not available->restart the process
+                if (cell.status!=='available') {
+
+                    //reset availableSet
+                    for(var i=0;i<availableSet.length;i++){
+                        angular.forEach(availableSet[i],function(value,key){
+                            value.status='free';
+                        });
+                        //there is a better way to empty array (splice)
+                        availableSet[i]=[];
+                    }
+                    //don't forget the center
+                    start.status='free';
+
+                    if (cell.boat === undefined) {
+                        start = cell;
+                        setAvailability(scope.currentBoat, start);
+                    }
+                    else {
+                        scope.message = 'This cell is already occupied';
+                    }
+                }
+                //select direction
+                else{
+                    //if click the start one : must select a direction
+                    if(cell==start){
+                        scope.message='select a sens';
+                    }
+                    //select direction
+                    else{for(var i=0;i<availableSet.length;i++){
+                        if(contains(availableSet[i],cell)){
+                            var boatIndex=scope.currentBoat.getIndex();
+                            angular.forEach(availableSet[i],function(value,key){
+                                value.boat=boatIndex;
+                                value.status='occupied';
+                                scope.currentBoat.cells.push(value);
+                            });
+                            start.boat = boatIndex;
+                            start.status='occupied';
+                            scope.currentBoat.cells.push(start);
+                            start=null;
+                        }
+                        //reset others
+                        else{
+                            angular.forEach(availableSet[i],function(value,key){
+                                value.status='free';
+                            });
+                        }
+                        //there is a better way to empty array
+                        availableSet[i]=[];
+                    }
+                        //go for next boat
+                        var indexCurrentBoat=indexOf(scope.boats,scope.currentBoat);
+                        if((indexCurrentBoat+1)<scope.boats.length){
+                            scope.currentBoat=scope.boats[indexCurrentBoat+1];
+                        }
+                    }
+                }
+            }
+
+            //check if all the boats have been placed
+            var isReady=true;
+            angular.forEach(scope.boats,function(value,key){
+                if(value.cells.length==0){
+                    isReady=false
+                }
+            });
+            scope.showPlay=isReady;
+
+        }
+
+    };
+
+    //set player ready
+    scope.play=function(){
+        //start
+
+        //will tell the server the player is ready
+        grid.startGame(scope.grid,scope.boats);
+
+        //will tell the main controller to go to next phase
+        scope.$emit('ready');
+
+        //hide play button (just for ui)
+        scope.showPlay=false;
+    }
+
+    //enemy has shot : we must display the result on the player grid
+    var target=function(data){
+        var cell=getCell(data.row,data.column);
+        //if we are hit
+        if(data.result.hit==true){
+            //update boat :
+            var boat;
+            for(var i=0;i<scope.boats.length;i++){
+                //should write a function to test boat equality...TODO
+                if(scope.boats[i].name==data.result.boat.name){
+                    boat=scope.boats[i];
+                    boat.health=data.result.boat.health;
+                    break;
+                }
+            }
+            //sank ?
+            if(boat.health==0){
+                angular.forEach(boat.cells,function(value,key){
+                    value.status='sunk';
+                });
+            }
+            //only hit
+            else{
+                cell.status='hit';
+            }
+        }
+        //missed
+        else{
+            cell.status='missed';
+        }
+    };
+    //register to the target event
+    grid.target(target);
+
+    //helper
+    //get cell
     var getCell=function(i,j){
         return scope.grid.getCell(i,j);
     }

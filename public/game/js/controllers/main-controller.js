@@ -1,39 +1,40 @@
 /**
  * Created with JetBrains WebStorm.
  * User: laurentrenard
- * Date: 12/4/12
- * Time: 3:24 PM
+ * Date: 12/18/12
+ * Time: 2:42 PM
  * To change this template use File | Settings | File Templates.
  */
-app.controller('mainCtrl',['$scope','grid','socket','$log',function(scope, grid,socket,log){
-    scope.message='hello';
+app.controller('mainCtrl',['$rootScope','$scope','$location','grid','$log',function(root,scope,location,grid,log){
+    //listen to route change events
+    root.message='';
+    root.status='';
+    root.showOverlay=false;
 
-    //register to socket event,
-    socket.on('greeting',function(data){
-       log.log(data.message);
+    root.$on("$routeChangeStart", function (event, next, current) {
+
+    });
+    root.$on("$routeChangeSuccess", function (event, current, previous) {
+
+    });
+    root.$on("$routeChangeError", function (event, current, previous, rejection) {
+
+        root.status=rejection.status;
+        root.message=rejection.message;
+
+        //redirect to the error page
+        location.path('/error');
+    });
+    root.$on('displayOverlay',function(event){
+        root.showOverlay=true;
     });
 
-    //connect to the server:
-    socket.emit('connection');
-
-    //phase
-    scope.currentPhase='placement';
-
-    scope.displayPlayButton=false;
-
-    scope.$on('ready',function(event,args){
-        scope.displayPlayButton=args.value;
-    });
-
-    //phases
-    scope.play=function(){
-        if(scope.displayPlayButton){
-            grid.saveGrid();
-            scope.currentPhase="play";
-            scope.displayPlayButton=false;
-        }
+    root.toggleOverlay=function(){
+        //leave game
+        grid.leave();
+        //close overlay
+        root.showOverlay=!root.showOverlay;
+        //go back to the rooms page
+        location.path('/game/home');
     };
-
-
-
 }]);
